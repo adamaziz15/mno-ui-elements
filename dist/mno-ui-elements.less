@@ -334,6 +334,7 @@ mno-admin {
   width: 100%;
   display: block;
   position: absolute;
+  overflow-y: hidden;
 
   /* Animation between states */
   #sidebar-wrapper, #content-wrapper {
@@ -756,6 +757,16 @@ mno-tasks-menu {
   }
 }
 
+mno-validation {
+  .checked {
+    color: @mno-validation-checked-color;
+  }
+
+  .unchecked {
+    color: @mno-validation-unchecked-color;
+  }
+}
+
 mno-widget {
   display: block;
   margin-top: 15px;
@@ -857,15 +868,5 @@ mno-widget {
         padding: 10px;
       }
     }
-  }
-}
-
-mno-validation {
-  .checked {
-    color: @mno-validation-checked-color;
-  }
-
-  .unchecked {
-    color: @mno-validation-unchecked-color;
   }
 }

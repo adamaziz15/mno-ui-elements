@@ -238,6 +238,39 @@ angular.module('mnoUiElements', [
 }).call(this);
 
 (function() {
+  var MnoRowController;
+
+  angular.module('mnoUiElements').controller('MnoRowController', MnoRowController).component('mnoRow', {
+    bindings: {
+      name: '@',
+      status: '@',
+      mnoRowClick: '&?',
+      mnoRowHref: '@?'
+    },
+    template: '<a ng-if="$ctrl.mnoRowClick" class="row-link" ng-click="ctrl.mnoRowClick()">\n  <span>{{$ctrl.name}}</span>\n  <span>{{$ctrl.status}}</span>\n  </a>\n  <a ng-if="$ctrl.mnoRowHref" class="row-link" ng-href="{{$ctrl.mnoRowHref}}">\n  <span>{{$ctrl.name}}</span>\n    <span>{{$ctrl.status}}</span>\n  </a>'
+  });
+
+  MnoRowController = function($state) {
+    var hasRowClick, hasRowHref;
+    this.mnoRowClick;
+    this.mnoRowHref;
+    this.name;
+    hasRowClick = this.mnoRowClick !== null;
+    hasRowHref = this.mnoRowHref !== null;
+    if ((hasRowClick != null ? hasRowClick : {
+      1: 0
+    }) + (hasRowHref != null ? hasRowHref : {
+      1: 0
+    }) + (typeof hasRowSref !== "undefined" && hasRowSref !== null ? hasRowSref : {
+      1: 0
+    }) > 1) {
+      throw Error('Must specify exactly one of mno-row-click, mno-row-href, ' + 'for mno-row directive');
+    }
+  };
+
+}).call(this);
+
+(function() {
   angular.module('mnoUiElements').component('mnoMultipleStringField', {
     bindings: {
       isDisabled: '=',
@@ -286,39 +319,6 @@ angular.module('mnoUiElements', [
       };
     }]
   });
-
-}).call(this);
-
-(function() {
-  var MnoRowController;
-
-  angular.module('mnoUiElements').controller('MnoRowController', MnoRowController).component('mnoRow', {
-    bindings: {
-      name: '@',
-      status: '@',
-      mnoRowClick: '&?',
-      mnoRowHref: '@?'
-    },
-    template: '<a ng-if="$ctrl.mnoRowClick" class="row-link" ng-click="ctrl.mnoRowClick()">\n  <span>{{$ctrl.name}}</span>\n  <span>{{$ctrl.status}}</span>\n  </a>\n  <a ng-if="$ctrl.mnoRowHref" class="row-link" ng-href="{{$ctrl.mnoRowHref}}">\n  <span>{{$ctrl.name}}</span>\n    <span>{{$ctrl.status}}</span>\n  </a>'
-  });
-
-  MnoRowController = function($state) {
-    var hasRowClick, hasRowHref;
-    this.mnoRowClick;
-    this.mnoRowHref;
-    this.name;
-    hasRowClick = this.mnoRowClick !== null;
-    hasRowHref = this.mnoRowHref !== null;
-    if ((hasRowClick != null ? hasRowClick : {
-      1: 0
-    }) + (hasRowHref != null ? hasRowHref : {
-      1: 0
-    }) + (typeof hasRowSref !== "undefined" && hasRowSref !== null ? hasRowSref : {
-      1: 0
-    }) > 1) {
-      throw Error('Must specify exactly one of mno-row-click, mno-row-href, ' + 'for mno-row directive');
-    }
-  };
 
 }).call(this);
 
@@ -656,21 +656,6 @@ angular.module('mnoUiElements', [
 }).call(this);
 
 (function() {
-  angular.module('mnoUiElements').component('mnoValidation', {
-    template:'<p ng-class="$ctrl.valid ? \'checked\' : \'unchecked\'"><i class="fa" ng-class="$ctrl.valid ? \'fa-check-circle\' : \'fa-times-circle\'"></i> {{$ctrl.message}}</p>',
-    bindings: {
-      valid: '=',
-      message: '@'
-    },
-    controller: function() {
-      var vm;
-      vm = this;
-    }
-  });
-
-}).call(this);
-
-(function() {
   angular.module('mnoUiElements').component('mnoWidget', {
     template:'<div class="widget"><div class="header"><div class="row"><div class="col-xs-12"><div class="pull-left"><i class="fa" ng-class="$ctrl.icon"></i> <span class="heading">{{$ctrl.heading}}</span></div><div ng-transclude="header"></div></div></div></div><div class="body"><div class="row"><div class="col-xs-12 loading" ng-show="$ctrl.isLoading"><mno-loading-ellipsis></mno-loading-ellipsis></div><div class="col-xs-12" ng-hide="$ctrl.isLoading"><div ng-transclude="body"></div></div></div></div><div class="footer"><div class="row"><div class="col-xs-12"><div ng-transclude="footer"></div></div></div></div></div>',
     transclude: {
@@ -682,6 +667,21 @@ angular.module('mnoUiElements', [
       icon: '@',
       isLoading: '=',
       heading: '@?'
+    },
+    controller: function() {
+      var vm;
+      vm = this;
+    }
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('mnoUiElements').component('mnoValidation', {
+    template:'<p ng-class="$ctrl.valid ? \'checked\' : \'unchecked\'"><i class="fa" ng-class="$ctrl.valid ? \'fa-check-circle\' : \'fa-times-circle\'"></i> {{$ctrl.message}}</p>',
+    bindings: {
+      valid: '=',
+      message: '@'
     },
     controller: function() {
       var vm;
